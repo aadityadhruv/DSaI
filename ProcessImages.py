@@ -30,7 +30,7 @@ def get_edges(filename,k=25,t1=127,t2=255,corner_num=4,q=0.6,min_dist=50):
     
 
 
-# In[3]:
+# In[1]:
 
 
 def get_bounding_rect(canny, image):
@@ -43,8 +43,8 @@ def get_bounding_rect(canny, image):
     c = 0
     for cnt in contours:
         M = cv2.moments(cnt)
-        cx = int(M['m10']/M['m00'])
-        cy = int(M['m01']/M['m00'])
+        cx = int(M['m10']/(M['m00'] + 0.0001))
+        cy = int(M['m01']/(M['m00'] + + 0.0001))
         delta = np.sqrt((cx - image.shape[1])**2 + (cy - image.shape[0])**2)
         area = cv2.contourArea(cnt)
 
@@ -53,9 +53,9 @@ def get_bounding_rect(canny, image):
             i = c
             max_y = y
         c += 1
-    
+     
+    print(i, "size:", len(contours))
     cnt = contours[i]
-    print(i)
     cv2.drawContours(image, [cnt], 0, (0,255,0), 3)
     return cv2.boundingRect(cnt)
     
@@ -75,23 +75,23 @@ def draw_bounding_rect(x,y,w,h,image_name):
 # In[5]:
 
 
-image = cv2.imread("test_plat.jpg")
+#image = cv2.imread("test_plat.jpg")
 
 
 # In[6]:
 
 
-edges = get_edges(image)
+#edges = get_edges(image)
 
 
 # In[7]:
 
 
-x,y,w,h = get_bounding_rect(edges, image)
+#x,y,w,h = get_bounding_rect(edges, image)
 
 
 # In[18]:
 
 
-draw_bounding_rect(x,y,w,h,"test_plat.jpg")
+#draw_bounding_rect(x,y,w,h,"test_plat.jpg")
 
